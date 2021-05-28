@@ -1,22 +1,18 @@
-Description:  PrasadAchar - Udacity project2
-Parameters:
-  EnvironmentName:
-    Description: An environment name that will be prefixed to resource names
-    Type: String
-Resources:
-  Ec2Instance:
-    Type: 'AWS::EC2::Instance'
-    Properties:
-    SecurityGroups:
-      - !Ref InstanceSecurityGroup
-    KeyName: udacity1
-    ImageId: 'ami-013f17f36f8b1fefb' # you may need to find out what instance types are available in your region - use https://cloud-images.ubuntu.com/locator/ec2/
-  InstanceSecurityGroup:
-    Type: 'AWS::EC2::SecurityGroup'
-    Properties:
-    GroupDescription: Enable SSH access via port 22
-    SecurityGroupIngress:
-      - IpProtocol: tcp
-        FromPort: '22'
-        ToPort: '22'
-        CidrIp: 0.0.0.0/0
+version: 2.1
+
+jobs:
+  create_infrastructure:
+    docker:
+      - image: amazon/aws-cli
+    steps:
+      - checkout
+      - run:
+          name: Ensure backend infrastructure exist
+          command: |
+            aws cloudformation deploy \
+              --template-file template.yml \
+              --stack-name my-stack
+workflows:
+  my_workflow:
+    jobs:
+      - create_infrastructure
