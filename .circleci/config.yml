@@ -1,4 +1,5 @@
 version: 2.1
+
 jobs:
   create_infrastructure:
     docker:
@@ -9,9 +10,8 @@ jobs:
           name: Ensure backend infrastructure exist
           command: |
             aws cloudformation deploy \
-            --template-file template.yml \
-            --parameter-overrides EnvironmentName=Udagram \
-            --stack-name mystack1
+              --template-file template.yml \
+              --stack-name my-stack
 workflows:
   my_workflow:
     jobs:
