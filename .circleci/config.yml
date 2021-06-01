@@ -1,16 +1,20 @@
 version: 2.1
 
+workflows:
+  test-env-vars:
+    jobs:
+      - build
+
 jobs:
-  create_infrastructure:
+  build:
     docker:
-      - image: amazon/aws-cli
+      - image: cimg/base:2020.01
+        auth:
+          username: mydockerhub-user
+          password: $DOCKERHUB_PASSWORD  # context / project UI env-var reference
     steps:
       - checkout
       - run:
-          name: Ensure backend infrastructure exist
+          name: "echo an env var that is part of our project"
           command: |
-            aws cloudformation describe-stacks
-workflows:
-  my_workflow:
-    jobs:
-      - create_infrastructure
+            echo $MY_ENV_VAR # this env var must be set within the project
