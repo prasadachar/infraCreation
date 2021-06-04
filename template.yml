@@ -1,4 +1,4 @@
-Resources:0d382e80be7ffdae5
+Resources:
   Ec2Instance:
    Type: 'AWS::EC2::Instance'
    Properties:
