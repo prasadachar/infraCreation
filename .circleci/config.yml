@@ -13,7 +13,7 @@ jobs:
     docker:
       - image: amazon/aws-cli
     steps:
-      - checkout
+      - checkout- create_infrastructure
       - run:
           name: Create Stack
           command: |
@@ -27,4 +27,4 @@ jobs:
 workflows:
   my_workflow:
     jobs:
-      - build
+      - create_infrastructure
